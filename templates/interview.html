@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10192f">
+    <title>Practice interview | HireSense AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('home') }}" aria-label="HireSense AI home">
+            <span class="brand-mark">H</span>
+            <span>HireSense <span class="brand-light">AI</span></span>
+        </a>
+        <a class="header-link" href="{{ url_for('home') }}"><span aria-hidden="true">&lt;-</span> Back to home</a>
+    </header>
+
+    <main class="page-shell interview-shell">
+        <section class="interview-intro">
+            <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR PRACTICE SESSION</span>
+            <h1>Take a breath.<br><span class="text-gradient">You’ve got this.</span></h1>
+            <p class="hero-description">Your voice interviewer will ask each question and listen to your answer. Speak naturally or type whenever you prefer.</p>
+            <div class="session-meta"><span class="meta-pill">{{ questions|length }} questions</span><span class="meta-pill">AI asks aloud</span><span class="meta-pill">Speak or type</span></div>
+        </section>
+
+        <section class="voice-setup" id="voice-setup">
+            <div class="setup-copy">
+                <span class="setup-icon" aria-hidden="true">♫</span>
+                <div>
+                    <h2>Start your voice interview</h2>
+                    <p>HireSense will ask questions aloud and start listening after each one. Camera preview is optional.</p>
+                </div>
+            </div>
+            <div class="setup-controls">
+                <label class="language-label" for="voice-language">Interview language</label>
+                <select id="voice-language" class="language-select">
+                    <option value="hi-IN" selected>हिन्दी (Hindi)</option>
+                    <option value="en-IN">English (India)</option>
+                    <option value="en-US">English (US)</option>
+                </select>
+                <button type="button" id="start-interview" class="btn btn-primary">Start voice interview <span aria-hidden="true">-&gt;</span></button>
+            </div>
+            <p class="voice-status setup-status" id="session-status" aria-live="polite">Allow microphone access when your browser asks. You can turn on the camera later, or continue without it.</p>
+        </section>
+
+        <form action="{{ url_for('analyze') }}" method="POST" class="interview-form" id="interview-form">
+            <input type="hidden" id="answer-language" name="answer_language" value="hi-IN">
+            {% for item in questions %}
+            <article class="question-card" data-question-index="{{ loop.index0 }}" data-english-question="{{ item.question }}" data-hindi-question="{{ item.hindi_question }}">
+                <div class="interview-room">
+                    <div class="question-content">
+                        <div class="assistant-message" data-assistant-state="ready">
+                            <span class="assistant-orb" aria-hidden="true"><span></span></span>
+                            <div class="assistant-message-copy">
+                                <strong>HireSense voice assistant</strong>
+                                <p data-assistant-prompt aria-live="polite">Ready to ask you a question.</p>
+                            </div>
+                        </div>
+                        <div class="question-heading">
+                            <span class="question-number">{{ "%02d"|format(loop.index) }}</span>
+                            <span class="question-count">QUESTION {{ loop.index }} <span class="muted-text">/ {{ questions|length }}</span></span>
+                        </div>
+                        <h2 class="question">{{ item.question }}</h2>
+                        <label class="answer-label" for="answer-{{ loop.index0 }}">Your answer <span class="muted-text">— speak or type</span></label>
+                        <textarea id="answer-{{ loop.index0 }}" name="answer_{{ loop.index0 }}" placeholder="Speak your answer or type it here..." required></textarea>
+                        <div class="answer-tools">
+                            <button class="voice-button" type="button" data-voice-input data-target="answer-{{ loop.index0 }}" aria-pressed="false">
+                                <span aria-hidden="true">🎙</span> Start answer
+                            </button>
+                            <button class="repeat-button" type="button" data-repeat-question>↻ Repeat question</button>
+                            <p class="voice-status" data-voice-status="{{ loop.index0 }}" aria-live="polite">The interviewer will read the question aloud.</p>
+                        </div>
+                        <div class="question-navigation">
+                            <span class="progress-label" data-progress-label>{{ loop.index }} of {{ questions|length }}</span>
+                            <button type="button" class="btn btn-primary" data-next-question>
+                                {% if loop.last %}Finish interview{% else %}Next question{% endif %}
+                                <span aria-hidden="true">-&gt;</span>
+                            </button>
+                            {% if loop.last %}
+                            <button type="submit" class="btn btn-primary" data-submit-interview hidden>See my feedback <span aria-hidden="true">-&gt;</span></button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <aside class="camera-panel" aria-label="Your interview camera preview">
+                        <div class="camera-heading"><span class="camera-live-dot"></span> CAMERA PREVIEW <span class="camera-private">PRIVATE</span></div>
+                        <div class="camera-frame">
+                            <video class="camera-video" autoplay muted playsinline aria-label="Live camera preview"></video>
+                            <div class="camera-placeholder">
+                                <span class="camera-placeholder-icon" aria-hidden="true">◉</span>
+                                <span>Your camera preview will appear here</span>
+                            </div>
+                            <span class="camera-overlay-label">YOU</span>
+                        </div>
+                        <p class="camera-status" data-camera-status aria-live="polite">Camera is off. Enable it to see your video.</p>
+                        <button type="button" class="camera-toggle" data-camera-toggle>Turn camera on</button>
+                        <p class="camera-privacy-note">Preview only. Nothing is recorded or uploaded.</p>
+                    </aside>
+                </div>
+            </article>
+            {% endfor %}
+            <div class="form-footer">
+                <p>Voice input needs microphone permission and an internet connection. You can type any answer instead.</p>
+            </div>
+        </form>
+        <footer class="site-footer"><span>HireSense AI</span><span>Progress, not perfection.</span></footer>
+    </main>
+    <script src="{{ url_for('static', filename='js/interview.js') }}" defer></script>
+</body>
+</html>

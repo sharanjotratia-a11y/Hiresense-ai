@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10192f">
+    <title>Your practice report | HireSense AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('home') }}" aria-label="HireSense AI home">
+            <span class="brand-mark">H</span>
+            <span>HireSense <span class="brand-light">AI</span></span>
+        </a>
+        <a class="header-link" href="{{ url_for('interview') }}">Practice again <span aria-hidden="true">-&gt;</span></a>
+    </header>
+
+    <main class="page-shell report-shell">
+        <section class="report-hero">
+            <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR PRACTICE REPORT</span>
+            <h1>Every step forward <span class="text-gradient">counts.</span></h1>
+            <p class="hero-description">Here’s a snapshot of your interview practice. Use it to celebrate your strengths and choose what to work on next.</p>
+            <div class="report-score">
+                <div class="score-ring" style="--score: {{ final_score }}%">
+                    <div class="score-ring-inner"><span>{{ final_score }}</span><small>out of 100</small></div>
+                </div>
+                <div class="score-copy">
+                    <span class="eyebrow">OVERALL PRACTICE SCORE</span>
+                    {% if final_score >= 80 %}
+                    <h2>Excellent momentum</h2>
+                    {% elif final_score >= 60 %}
+                    <h2>Good progress</h2>
+                    {% elif final_score >= 40 %}
+                    <h2>Room to grow</h2>
+                    {% else %}
+                    <h2>Keep building confidence</h2>
+                    {% endif %}
+                    <p>You’ve completed your practice session. Keep refining your answers and try again whenever you’re ready.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="feedback-card">
+            <span class="feedback-icon" aria-hidden="true">✦</span>
+            <div><span class="eyebrow">A NOTE FOR YOUR NEXT SESSION</span>
+                {% for item in feedback %}<p>{{ item }}</p>{% endfor %}
+            </div>
+        </section>
+
+        <section class="answer-review" aria-labelledby="review-heading">
+            <div class="section-heading report-section-heading">
+                <span class="eyebrow">QUESTION-BY-QUESTION</span>
+                <h2 id="review-heading">Your answer review</h2>
+            </div>
+            {% for result in results %}
+            <article class="result-card">
+                <div class="result-card-top">
+                    <span class="question-number">{{ "%02d"|format(loop.index) }}</span>
+                    <span class="result-overall">{{ result.overall }}<small>% overall</small></span>
+                </div>
+                <h3>{% if answer_language == "hi-IN" %}{{ result.hindi_question }}{% else %}{{ result.question }}{% endif %}</h3>
+                <p class="answer-label">YOUR ANSWER</p>
+                <p class="answer-text">{{ result.answer or "No answer was provided." }}</p>
+                <div class="scores">
+                    <div class="score-item"><span>Relevance</span><strong>{{ result.relevance }}%</strong></div>
+                    <div class="score-item"><span>Sentiment</span><strong>{{ result.sentiment }}</strong></div>
+                    <div class="score-item"><span>Confidence</span><strong>{{ result.confidence }}%</strong></div>
+                    <div class="score-item"><span>Overall</span><strong>{{ result.overall }}%</strong></div>
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+        <div class="report-actions"><a href="{{ url_for('interview') }}" class="btn btn-primary">Practice again <span aria-hidden="true">-&gt;</span></a><a href="{{ url_for('home') }}" class="btn btn-secondary">Back to home</a></div>
+        <footer class="site-footer"><span>HireSense AI</span><span>Keep showing up for yourself.</span></footer>
+    </main>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10192f">
+    <title>HireSense AI | Interview practice, made smarter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('home') }}" aria-label="HireSense AI home">
+            <span class="brand-mark">H</span>
+            <span>HireSense <span class="brand-light">AI</span></span>
+        </a>
+        <a class="header-link" href="{{ url_for('interview') }}">Start practicing <span aria-hidden="true">-&gt;</span></a>
+    </header>
+
+    <main class="page-shell home-shell">
+        <section class="hero">
+            <div class="hero-copy">
+                <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR NEXT INTERVIEW, BETTER</span>
+                <h1>Show up ready.<br><span class="text-gradient">Speak with confidence.</span></h1>
+                <p class="hero-description">A calmer way to prepare for the questions that matter. Practice at your own pace and get useful feedback on every answer.</p>
+                <div class="hero-actions">
+                    <a href="{{ url_for('interview') }}" class="btn btn-primary">Start a practice interview <span aria-hidden="true">-&gt;</span></a>
+                    <span class="action-note">Free to practice. No sign-up needed.</span>
+                </div>
+                <div class="hero-proof">
+                    <span class="proof-icon" aria-hidden="true">+</span>
+                    <span><strong>{{ total_questions }} focused questions</strong><br>Get started in just a few minutes</span>
+                </div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="hero-panel">
+                    <div class="panel-top"><span class="panel-dot"></span><span class="panel-dot"></span><span class="panel-dot"></span><span class="panel-label">YOUR PRACTICE SESSION</span></div>
+                    <div class="panel-avatar">H</div>
+                    <div class="panel-line panel-line-main"></div>
+                    <div class="panel-line panel-line-short"></div>
+                    <div class="panel-score"><span class="score-spark" aria-hidden="true">*</span><span><strong>One answer at a time</strong><small>Build confidence with practice</small></span></div>
+                </div>
+                <div class="floating-chip chip-top"><span class="chip-check">✓</span> Find your flow</div>
+                <div class="floating-chip chip-bottom"><span class="chip-wave">))</span> Voice or text</div>
+            </div>
+        </section>
+
+        <section class="benefits-section" aria-labelledby="benefits-title">
+            <div class="section-heading">
+                <span class="eyebrow">A LITTLE PRACTICE GOES A LONG WAY</span>
+                <h2 id="benefits-title">A better way to get interview-ready</h2>
+                <p>Simple tools to help you think clearly and make every answer count.</p>
+            </div>
+            <div class="benefit-grid">
+                <article class="benefit-card">
+                    <span class="benefit-icon icon-lavender" aria-hidden="true">01</span>
+                    <h3>Practice real questions</h3>
+                    <p>Work through a focused set of interview questions in a no-pressure space.</p>
+                </article>
+                <article class="benefit-card">
+                    <span class="benefit-icon icon-mint" aria-hidden="true">02</span>
+                    <h3>Answer your way</h3>
+                    <p>Type your response or use voice input to capture your ideas as you speak.</p>
+                </article>
+                <article class="benefit-card">
+                    <span class="benefit-icon icon-peach" aria-hidden="true">03</span>
+                    <h3>See what to improve</h3>
+                    <p>Review relevance, confidence, sentiment and practical feedback after each session.</p>
+                </article>
+            </div>
+        </section>
+        <footer class="site-footer"><span>HireSense AI</span><span>Thoughtful practice for your next big moment.</span></footer>
+    </main>
+</body>
+</html>
